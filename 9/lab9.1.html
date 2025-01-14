@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Animation Examples</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      background-color: #fac8e0;
+      padding: 20px;
+    }
+
+
+    h1 {
+      color: #34495e;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+
+    #ball {
+      width: 50px;
+      height: 50px;
+      background-color: #580020;
+      position: absolute;
+      bottom: 0;
+      border-radius: 50%;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+
+    #element {
+      width: 0;
+      height: 50px;
+      background-color: #812d53;
+      position: relative;
+      margin-top: 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+
+    .slide-in {
+      animation: slideIn 1s forwards;
+    }
+
+
+    .bounce {
+      animation: bounce 1s infinite;
+    }
+
+
+    .fade-in {
+      animation: fadeIn 1s forwards;
+    }
+
+
+    .expand {
+      animation: expand 1s forwards;
+    }
+
+
+    @keyframes slideIn {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-30px); }
+      60% { transform: translateY(-15px); }
+    }
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+
+    @keyframes expand {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Animation Examples</h1>
+
+
+  <div id="ball" class="bounce"></div>
+  <div id="element" class="slide-in"></div>
+  <div id="expandElement" class="expand"></div>
+  <div id="fadeElement" class="fade-in"></div>
+
+
+  <script>
+    // Анімація стрибання кулі
+    function animateBouncingBall() {
+      let ball = document.getElementById('ball');
+      let position = 0;
+      let direction = 1;
+
+
+      function move() {
+        position += direction * 2; // Move the ball horizontally
+        if (position >= 400 || position <= 0) { // Reverse direction at the boundaries
+          direction *= -1;
+        }
+        ball.style.left = position + 'px';
+        requestAnimationFrame(move);
+      }
+
+
+      requestAnimationFrame(move);
+    }
+
+
+    // Анімація ширини елемента
+    function animateWidth() {
+      let elem = document.getElementById('element');
+      let start = performance.now();
+
+
+      function animate(time) {
+        let timeFraction = (time - start) / 1000; // duration of 1000 ms
+        if (timeFraction > 1) timeFraction = 1;
+
+
+        elem.style.width = timeFraction * 100 + '%';
+
+
+        if (timeFraction < 1) {
+          requestAnimationFrame(animate);
+        }
+      }
+
+
+      requestAnimationFrame(animate);
+    }
+
+
+    // Анімація з функціями easing
+    function easeOut(timeFraction) {
+      return 1 - Math.pow(1 - timeFraction, 3);
+    }
+
+
+    function animateBouncingBallWithEase() {
+      let ball = document.getElementById('ball');
+      let position = 0;
+      let direction = 1;
+
+
+      function move() {
+        position += direction * 2; // Move the ball horizontally
+        if (position >= 400 || position <= 0) {
+          direction *= -1;
+        }
+
+
+        let timeFraction = (Date.now() - start) / 1000; // duration of 1000 ms
+        ball.style.left = easeOut(timeFraction) * 400 + 'px';
+
+
+        if (timeFraction < 1) {
+          requestAnimationFrame(move);
+        }
+      }
+
+
+      let start = Date.now();
+      requestAnimationFrame(move);
+    }
+
+
+    // Анімація розширення
+    function animateExpansion() {
+      let elem = document.getElementById('expandElement');
+      elem.classList.add('expand');
+    }
+
+
+    // Анімація з ефектом fade-in
+    function animateFadeIn() {
+      let elem = document.getElementById('fadeElement');
+      elem.classList.add('fade-in');
+    }
+
+
+    // Впускання всіх анімацій
+    window.onload = function() {
+      animateBouncingBall();
+      animateWidth();
+      animateBouncingBallWithEase();
+      animateExpansion();
+      animateFadeIn();
+    };
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крута ієрархія</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e0f7fa;
+            color: #004d40;
+            margin: 20px;
+        }
+        .tree-container {
+            border-left: 2px solid #26a69a;
+            padding-left: 20px;
+        }
+        .tree-node {
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: #ffffff;
+            border: 1px solid #26a69a;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+        .node-content {
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        .node-content:hover {
+            background-color: #26a69a;
+            color: #ffffff;
+        }
+        .icon {
+            margin-right: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        ul ul {
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="fruits" class="tree-node">
+        <span class="node-content"><i class="icon">🍎</i> fruits</span>
+        <ul>
+            <li><span class="node-content"><i class="icon">🍏</i> apple</span></li>
+            <li><span class="node-content"><i class="icon">🍍</i> pineapple</span></li>
+            <li><span class="node-content"><i class="icon">🍑</i> apricot</span></li>
+            <li><span class="node-content"><i class="icon">🍐</i> pear</span></li>
+            <li><span class="node-content"><i class="icon">🍋</i> lemon</span></li>
+        </ul>
+    </div>
+    <div id="vegetables" class="tree-node">
+        <span class="node-content"><i class="icon">🥕</i> vegetables</span>
+        <ul>
+            <li><span class="node-content"><i class="icon">🥔</i> potatoes</span></li>
+            <li><span class="node-content"><i class="icon">🍠</i> beetroot</span></li>
+            <li><span class="node-content"><i class="icon">🥕</i> carrots</span></li>
+            <li><span class="node-content"><i class="icon">🍐</i> pear</span></li>
+        </ul>
+    </div>
+
+
+    <script>
+        // Функція для перемикання видимості під-розділів
+        function toggleVisibility(event) {
+            const ul = event.target.nextElementSibling;
+            if (ul) {
+                ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+
+        // Додати обробник кліку до кожного елемента
+        document.querySelectorAll('.node-content').forEach(element => {
+            element.addEventListener('click', toggleVisibility);
+        });
+    </script>
+</body>
+</html>
+
+

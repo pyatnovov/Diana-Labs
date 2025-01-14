@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розрахунок площ геометричних фігур</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a8d6f9;
+            text-align: center;
+            padding: 20px;
+        }
+
+
+        h1 {
+            color: #333;
+        }
+
+
+        .output {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #083c74;
+        }
+    </style>
+</head>
+<body>
+    <h1>Розрахунок площ геометричних фігур</h1>
+
+
+    <label for="params">Введіть параметри:</label>
+    <input type="text" id="params" placeholder="Введіть ширину і довжину (наприклад, 10,20)">
+    <div class="output" id="areaResult"></div>
+
+
+    <script>
+        document.getElementById('params').addEventListener('input', function() {
+            calculateArea();
+        });
+
+
+        function calculateArea() {
+            const params = document.getElementById('params').value;
+            const [width, length] = params.split(',').map(Number);
+
+
+            // Визначення номеру варіанту
+            const variant = (params.length % 10) - 1; // модулювання номера варіанту
+            let area;
+
+
+            switch (variant) {
+                case 0:
+                    // Прямокутник
+                    area = width * length;
+                    break;
+                case 1:
+                    // Коло
+                    area = Math.PI * Math.pow(width / 2, 2);
+                    break;
+                case 2:
+                    // Трикутник
+                    area = (width * length) / 2;
+                    break;
+                case 3:
+                    // Овал
+                    area = Math.PI * width * length;
+                    break;
+                case 4:
+                    // Паркування (прямокутник)
+                    area = width * length;
+                    break;
+                case 5:
+                    // Паралелограм
+                    area = width * length * Math.sin(Math.PI / 4);
+                    break;
+                default:
+                    area = 0;
+            }
+
+
+            document.getElementById('areaResult').textContent = `Площа: ${area.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
+
+

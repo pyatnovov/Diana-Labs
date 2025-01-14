@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Date Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+
+        h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+
+        #dateDisplay {
+            font-size: 1.6em;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+
+        button {
+            font-size: 1.2em;
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Завдання 2.1. Виведення поточної дати, дня тижня і часу</h2>
+
+
+    <button onclick="displayCurrentDateTime()">Виконати</button>
+
+
+    <div id="dateDisplay"></div>
+
+
+    <script>
+        function displayCurrentDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            const formattedDate = now.toLocaleDateString('uk-UA', options);
+
+
+            document.getElementById('dateDisplay').innerText = `Дата: ${formattedDate}`;
+        }
+    </script>
+</body>
+</html>
+
+

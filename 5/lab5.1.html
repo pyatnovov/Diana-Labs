@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Tabs</title>
+    <style>
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+
+        #tabbed_box {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            width: 500px;
+            overflow: hidden;
+        }
+
+
+        .tabbed_box h4 {
+            background: #4ca1af;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            font-size: 24px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+
+        .tabbed_box h4 small {
+            display: block;
+            font-size: 12px;
+            font-weight: normal;
+            text-transform: none;
+        }
+
+
+        .tabbed_area {
+            padding: 20px;
+        }
+
+
+        ul.tabs {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+
+        ul.tabs li {
+            flex: 1;
+        }
+
+
+        ul.tabs li a {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #4ca1af;
+            background: #ffffff;
+            border-radius: 12px 12px 0 0;
+            transition: background 0.3s, color 0.3s;
+        }
+
+
+        ul.tabs li a:hover, ul.tabs li a.active {
+            background: #4ca1af;
+            color: #ffffff;
+        }
+
+
+        .content {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 0 0 12px 12px;
+        }
+
+
+        .content ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .content ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+
+        .content ul li a {
+            text-decoration: none;
+            color: #4ca1af;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+
+        .content ul li a:hover {
+            text-decoration: underline;
+        }
+
+
+        .content ul li:last-child {
+            border-bottom: none;
+        }
+    </style>
+    <script>
+        function tabSwitch(new_tab, new_content) {
+            const newTabElement = document.getElementById(new_tab);
+            const newContentElement = document.getElementById(new_content);
+
+
+            if (!newTabElement || !newContentElement) return;
+
+
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => content.style.display = 'none');
+
+
+            const tabs = document.querySelectorAll('.tabs li a');
+            tabs.forEach(tab => {
+                tab.className = '';
+                tab.setAttribute('aria-selected', 'false');
+                tab.setAttribute('tabindex', '-1');
+            });
+
+
+            newContentElement.style.display = 'block';
+            newTabElement.className = 'active';
+            newTabElement.setAttribute('aria-selected', 'true');
+            newTabElement.setAttribute('tabindex', '0');
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('content_1').style.display = 'block';
+
+
+            const tabs = document.querySelectorAll('.tabs li a');
+            tabs.forEach(tab => {
+                tab.setAttribute('role', 'tab');
+                tab.setAttribute('aria-selected', tab.classList.contains('active'));
+                tab.addEventListener('keydown', (event) => {
+                    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+                        const currentIndex = Array.from(tabs).indexOf(tab);
+                        const nextIndex = event.key === 'ArrowRight'
+                            ? (currentIndex + 1) % tabs.length
+                            : (currentIndex - 1 + tabs.length) % tabs.length;
+                        tabs[nextIndex].focus();
+                        tabs[nextIndex].click();
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="tabbed_box" class="tabbed_box">
+        <h4>Browse Site <small>Select a Tab</small></h4>
+        <div class="tabbed_area">
+            <ul class="tabs" role="tablist">
+                <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active" tabindex="0">Topics</a></li>
+                <li><a href="javascript:tabSwitch('tab_2', 'content_2');" id="tab_2" tabindex="-1">Archives</a></li>
+                <li><a href="javascript:tabSwitch('tab_3', 'content_3');" id="tab_3" tabindex="-1">Pages</a></li>
+            </ul>
+
+
+            <div id="content_1" class="content">
+                <ul>
+                    <li><a href="#">HTML Techniques</a></li>
+                    <li><a href="#">CSS Styling</a></li>
+                    <li><a href="#">Flash Tutorials</a></li>
+                    <li><a href="#">Web Miscellanea</a></li>
+                </ul>
+            </div>
+
+
+            <div id="content_2" class="content">
+                <ul>
+                    <li><a href="#">December 2024</a></li>
+                    <li><a href="#">November 2024</a></li>
+                    <li><a href="#">October 2024</a></li>
+                </ul>
+            </div>
+
+
+            <div id="content_3" class="content">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

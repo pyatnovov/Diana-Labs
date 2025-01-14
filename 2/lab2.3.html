@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна 2.3: Динамічна таблиця</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #8aaef6;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+
+        h1 {
+            color: #333;
+        }
+
+
+        input {
+            margin: 5px;
+            padding: 5px;
+            font-size: 1rem;
+        }
+
+
+        button {
+            padding: 8px 16px;
+            font-size: 1rem;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+
+        table, th, td {
+            border: 1px solid #333;
+        }
+
+
+        th, td {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+        }
+
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #007BFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Динамічна таблиця A<sub>ij</sub> = 3j - 2i</h1>
+
+
+    <!-- Поля для вводу кількості рядків і стовпців -->
+    <label for="rows">Кількість рядків:</label>
+    <input type="number" id="rows" min="1" placeholder="Введіть кількість рядків">
+
+
+    <label for="columns">Кількість стовпців:</label>
+    <input type="number" id="columns" min="1" placeholder="Введіть кількість стовпців">
+
+
+    <br>
+    <button onclick="generateTable()">Створити таблицю</button>
+
+
+    <!-- Таблиця -->
+    <div id="tableContainer"></div>
+
+
+    <!-- Вивід результату -->
+    <div id="result"></div>
+
+
+    <script>
+        function generateTable() {
+            const rows = parseInt(document.getElementById("rows").value);
+            const columns = parseInt(document.getElementById("columns").value);
+            const tableContainer = document.getElementById("tableContainer");
+            const resultContainer = document.getElementById("result");
+
+
+            if (isNaN(rows) || isNaN(columns) || rows <= 0 || columns <= 0) {
+                alert("Будь ласка, введіть коректні значення для рядків та стовпців.");
+                return;
+            }
+
+
+            // Очищення попередніх результатів
+            tableContainer.innerHTML = "";
+            resultContainer.textContent = "";
+
+
+            // Створення таблиці
+            const table = document.createElement("table");
+            const matrix = []; // Двовимірний масив для зберігання значень
+
+
+            for (let i = 1; i <= rows; i++) {
+                const row = document.createElement("tr");
+                matrix[i - 1] = []; // Ініціалізація рядка в масиві
+
+
+                for (let j = 1; j <= columns; j++) {
+                    const cell = document.createElement("td");
+                    const value = 3 * j - 2 * i; // Формула Aij = 3j - 2i
+                    matrix[i - 1][j - 1] = value; // Запис у масив
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+
+
+            tableContainer.appendChild(table);
+
+
+            // Розрахунок суми/добутку для певного варіанту
+            const variant = prompt("Введіть ваш варіант (від 1 до 28):");
+            if (!variant || isNaN(variant) || variant < 1 || variant > 28) {
+                alert("Варіант введено некоректно.");
+                return;
+            }
+
+
+            let result = 0;
+            switch (parseInt(variant) % 5) {
+                case 1: // Варіанти 1, 6, 11, 16, 21, 26: Сума всіх елементів
+                    result = matrix.flat().reduce((sum, num) => sum + num, 0);
+                    resultContainer.textContent = "Сума всіх елементів: " + result;
+                    break;
+                case 2: // Варіанти 2, 7, 12, 17, 22, 27: Сума другого рядка
+                    if (rows >= 2) {
+                        result = matrix[1].reduce((sum, num) => sum + num, 0);
+                        resultContainer.textContent = "Сума елементів другого рядка: " + result;
+                    } else {
+                        resultContainer.textContent = "Другий рядок відсутній.";
+                    }
+                    break;
+                case 3: // Варіанти 3, 8, 13, 18, 23, 28: Сума третього стовпця
+                    if (columns >= 3) {
+                        result = matrix.reduce((sum, row) => sum + row[2], 0);
+                        resultContainer.textContent = "Сума елементів третього стовпця: " + result;
+                    } else {
+                        resultContainer.textContent = "Третій стовпець відсутній.";
+                    }
+                    break;
+                case 4: // Варіанти 4, 9, 14, 19, 24: Сума елементів на головній діагоналі
+                    result = 0;
+                    for (let i = 0; i < Math.min(rows, columns); i++) {
+                        result += matrix[i][i];
+                    }
+                    resultContainer.textContent = "Сума елементів головної діагоналі: " + result;
+                    break;
+                case 0: // Варіанти 5, 10, 15, 20, 25: Добуток елементів останнього стовпця
+                    result = 1;
+                    for (let i = 0; i < rows; i++) {
+                        result *= matrix[i][columns - 1];
+                    }
+                    resultContainer.textContent = "Добуток елементів останнього стовпця: " + result;
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+

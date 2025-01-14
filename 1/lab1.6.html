@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інформація про товари</title>
+    <style>
+        /* Загальні стилі */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #6dd5ed, #2193b0);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+        /* Контейнер */
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+
+        /* Заголовок */
+        h2 {
+            color: #2193b0;
+            margin-bottom: 20px;
+        }
+
+
+        /* Поля вводу */
+        input[type="text"] {
+            width: 90%;
+            padding: 8px 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            outline: none;
+        }
+
+
+        input[type="text"]:focus {
+            border-color: #2193b0;
+            box-shadow: 0 0 5px rgba(33, 147, 176, 0.5);
+        }
+
+
+        /* Кнопки */
+        input[type="button"] {
+            background-color: #2193b0;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: background-color 0.3s ease;
+        }
+
+
+        input[type="button"]:hover {
+            background-color: #1a78a2;
+        }
+
+
+        /* Поля виводу */
+        input[readonly] {
+            background-color: #f9f9f9;
+            border: none;
+            color: #555;
+            font-size: 16px;
+            text-align: center;
+        }
+
+
+        /* Додаткові стилі для секцій */
+        .output-section {
+            margin-top: 15px;
+        }
+
+
+        .output-section input {
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        // Масиви з даними про товари
+        let product = ["Зошит", "Зарядка", "Змішувач", "Замок", "Зелений чай", "Зубна паста"];
+        let quantity = [105, 50, 20, 40, 200, 150];
+        let cost = [26, 150, 320, 85, 90, 35];
+
+
+        // Змінна для збереження індексу обраного товару
+        let selectedIndex = -1;
+
+
+        // Функція для пошуку наявної кількості і вартості товару
+        function fun1() {
+            let inputName = document.form1.name_cont.value.trim();
+            let outputQuantity = document.form1.output_quantity;
+            let outputCost = document.form1.output_cost;
+
+
+            selectedIndex = -1;
+
+
+            for (let i = 0; i < product.length; i++) {
+                if (product[i].toLowerCase() === inputName.toLowerCase()) {
+                    selectedIndex = i;
+                    break;
+                }
+            }
+
+
+            if (selectedIndex !== -1) {
+                outputQuantity.value = "Наявна кількість: " + quantity[selectedIndex] + " шт.";
+                outputCost.value = "Вартість за одиницю: " + cost[selectedIndex] + " грн.";
+            } else {
+                outputQuantity.value = "Товар не знайдено!";
+                outputCost.value = "";
+            }
+        }
+
+
+        // Функція для обчислення загальної суми
+        function fun2() {
+            let outputTotal = document.form1.output_total;
+
+
+            if (selectedIndex !== -1) {
+                let total = quantity[selectedIndex] * cost[selectedIndex];
+                outputTotal.value = "Загальна сума: " + total + " грн.";
+            } else {
+                outputTotal.value = "Спочатку введіть назву товару і знайдіть його дані!";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Інформація про товари</h2>
+        <form name="form1">
+            <!-- Поле для введення назви товару -->
+            <label>Введіть назву товару:</label>
+            <br>
+            <input type="text" name="name_cont" placeholder="Наприклад: Зошит">
+            <br>
+            <input type="button" value="Наявна кількість і вартість" onclick="fun1()">
+            <input type="button" value="Загальна сума" onclick="fun2()">
+           
+            <!-- Поля для виводу результатів -->
+            <div class="output-section">
+                <input type="text" name="output_quantity" readonly placeholder="Тут буде кількість товару">
+                <br>
+                <input type="text" name="output_cost" readonly placeholder="Тут буде вартість товару">
+                <br>
+                <input type="text" name="output_total" readonly placeholder="Тут буде загальна сума">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+

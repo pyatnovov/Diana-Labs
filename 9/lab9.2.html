@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Logo 121</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6c567b, #a29ec4);
+            overflow: hidden;
+        }
+
+
+        #animation-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+
+        .circle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #6c567b;
+            border-radius: 50%;
+            animation: bounce 2s infinite alternate;
+        }
+
+
+        .circle:nth-child(2) {
+            background: #a29ec4;
+            animation-delay: 0.5s;
+        }
+
+
+        @keyframes bounce {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(200px, 200px) scale(1.5);
+            }
+        }
+
+
+        #text {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scale(1);
+            font-family: Arial, sans-serif;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            animation: textAnimation 4s infinite;
+        }
+
+
+        @keyframes textAnimation {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.2);
+            }
+        }
+
+
+        .new-object {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 60px;
+            height: 60px;
+            background: #563d7c;
+            border-radius: 10px;
+            animation: appear 3s infinite;
+        }
+
+
+        @keyframes appear {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="animation-container">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div id="text">121 Software Engineering</div>
+        <div class="new-object"></div>
+    </div>
+    <button id="toggle-animation" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 20px; font-size: 16px;">Toggle Animation</button>
+
+
+    <script>
+        const container = document.getElementById('animation-container');
+        const button = document.getElementById('toggle-animation');
+
+
+        let isAnimating = true;
+
+
+        button.addEventListener('click', () => {
+            isAnimating = !isAnimating;
+            if (isAnimating) {
+                container.style.animationPlayState = 'running';
+            } else {
+                container.style.animationPlayState = 'paused';
+            }
+            document.querySelectorAll('div').forEach(div => {
+                div.style.animationPlayState = isAnimating ? 'running' : 'paused';
+            });
+        });
+
+
+        setTimeout(() => {
+            isAnimating = false;
+            document.querySelectorAll('div').forEach(div => {
+                div.style.animationPlayState = 'paused';
+            });
+        }, 10000);
+    </script>
+</body>
+</html>
+
+

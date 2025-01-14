@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Розрахунок дати</title>
+    <style>
+        /* Загальний стиль сторінки */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fc;
+            color: #333;
+        }
+
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-align: center;
+        }
+
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+
+        input[type="number"] {
+            font-size: 1.2em;
+            padding: 10px;
+            margin-right: 10px;
+            width: 120px;
+            text-align: center;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+
+        button {
+            font-size: 1.2em;
+            padding: 12px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+
+        button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+
+        #result {
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f3f5;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e6ea;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Розрахунок минулої чи майбутньої дати</h1>
+    </header>
+
+
+    <main>
+        <h2>Завдання 2.3. Розрахунок дати на основі введеного значення N</h2>
+
+
+        <form onsubmit="calculateDate(event)">
+            <label for="daysInput">Введіть кількість днів (N):</label>
+            <input type="number" id="daysInput" placeholder="Напр., 10 чи -5" required>
+            <button type="submit">Розрахувати</button>
+        </form>
+
+
+        <div id="result">Тут буде відображено результат.</div>
+    </main>
+
+
+   
+
+
+    <script>
+        function calculateDate(event) {
+            event.preventDefault();
+            const daysInput = document.getElementById("daysInput").value;
+            const days = parseInt(daysInput, 10);
+            const currentDate = new Date();
+
+
+            // Обчислення нової дати
+            const targetDate = new Date(currentDate);
+            targetDate.setDate(currentDate.getDate() + days);
+
+
+            // Форматування дати
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = targetDate.toLocaleDateString('uk-UA', options);
+
+
+            const dateType = days >= 0 ? 'Майбутня дата:' : 'Минула дата:';
+
+
+            document.getElementById("result").innerHTML = `
+                <strong>${dateType}</strong> ${formattedDate}
+            `;
+        }
+    </script>
+</body>
+</html>
+
+

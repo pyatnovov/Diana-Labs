@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 3: Інтернет сторінка</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .info {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 22px);
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+        }
+        input[type="text"]:focus {
+            border-color: #0056b3;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Завдання 3: Інформація про студента</h1>
+    <div class="info">
+        <p>Прізвище, ім'я та по батькові студента:</p>
+        <p id="fullName"></p>
+    </div>
+    <div class="form-group">
+        <label for="inputField1">Поле 1:</label>
+        <input type="text" id="inputField1" onblur="handleBlur()" onselect="handleSelect()">
+    </div>
+    <div class="form-group">
+        <label for="inputField2">Поле 2:</label>
+        <input type="text" id="inputField2" readonly>
+    </div>
+    <button onclick="calculateArithmetic()">Розрахувати F=1-x-y-z</button>
+
+
+    <script>
+        // Відображення ПІБ засобами JavaScript
+        const surname = "Гасюк";
+        const firstName = "Діана";
+        const middleName = "Сергіївна";
+        document.getElementById("fullName").textContent = `${surname} ${firstName} ${middleName}`;
+
+
+        // Функція для відображення повідомлення
+        function showBirthInfo() {
+            const birthDate = "30.10.2005";
+            const birthPlace = "м. Івано-Франківськ";
+            alert(`Дата народження: ${birthDate}\nМісце народження: ${birthPlace}`);
+        }
+
+
+        // Функція для розрахунку арифметичної
+        function calculateArithmetic() {
+            const x = parseFloat(prompt("Введіть значення x:"));
+            const y = parseFloat(prompt("Введіть значення y:"));
+            const z = parseFloat(prompt("Введіть значення z:"));
+            const F = 1 - x - y - z;
+            alert(`Результат розрахунку: F = ${F}`);
+        }
+
+
+        // Обробка події onBlur
+        function handleBlur() {
+            const inputValue = document.getElementById("inputField1").value;
+            document.getElementById("inputField2").value = `Ваша відповідь: ${inputValue}`;
+        }
+
+
+        // Обробка події onSelect
+        function handleSelect() {
+            const inputValue = document.getElementById("inputField1").value;
+            document.getElementById("inputField2").value = `Текст вибрано: ${inputValue}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Day of Week Display</title>
+    <style>
+        /* Загальний стиль сторінки */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fc;
+            color: #333;
+        }
+
+
+        /* Заголовок сторінки */
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-align: center;
+        }
+
+
+        /* Блок виведення даних */
+        #dayDisplay {
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f3f5;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e6ea;
+        }
+
+
+        /* Кнопка */
+        button {
+            font-size: 1.2em;
+            padding: 12px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+
+        button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+
+        /* Нижній колонтитул */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            background-color: #e9ecef;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Інформація про день тижня</h1>
+    </header>
+
+
+    <main>
+        <h2>Завдання 2.2. Виведення дня і номера тижня</h2>
+
+
+        <button onclick="displayDayOfWeek()">Виконати</button>
+
+
+        <div id="dayDisplay">Тут буде відображено результат.</div>
+    </main>
+
+
+   
+
+
+    <script>
+        function displayDayOfWeek() {
+            const now = new Date();
+            const dayNumber = now.getDay() + 1; // getDay() returns 0 for Sunday, 6 for Saturday
+            const dayNames = ['неділя', 'понеділок', 'вівторок', 'середа', 'четвер', 'п’ятниця', 'субота'];
+            const dayName = dayNames[dayNumber - 1];
+
+
+            document.getElementById('dayDisplay').innerHTML = `
+                <strong>Номер тижня:</strong> ${dayNumber}<br>
+                <strong>Назва дня тижня:</strong> ${dayName}
+            `;
+        }
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестування</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #bbe3fb;
+        }
+
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+
+        .quiz-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #7ebede;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+
+        .question-group {
+            margin-bottom: 20px;
+        }
+
+
+        .question-group h3 {
+            margin-bottom: 10px;
+        }
+
+
+        label {
+            display: block;
+            padding: 8px;
+            border: 1px solid #b3e0ea;
+            background-color: #b9e9f6;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+
+        button {
+            padding: 10px 20px;
+            background-color: #0c3356;
+            color: rgb(195, 230, 242);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+
+        button:hover {
+            background-color: #1e357b;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+
+        tfoot td {
+            font-weight: bold;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Тестування</h1>
+
+
+        <form id="quizForm">
+            <div class="question-group">
+                <h3>Запитання 1: Оберіть правильні варіанти (радіокнопки)</h3>
+                <label><input type="radio" name="q1" value="1"> Відповідь 1</label>
+                <label><input type="radio" name="q1" value="2"> Відповідь 2</label>
+                <label><input type="radio" name="q1" value="3"> Відповідь 3</label>
+                <label><input type="radio" name="q1" value="4"> Відповідь 4</label>
+            </div>
+
+
+            <div class="question-group">
+                <h3>Запитання 2: Оберіть правильні варіанти (прапорці)</h3>
+                <label><input type="checkbox" name="q2" value="1"> Відповідь 1</label>
+                <label><input type="checkbox" name="q2" value="2"> Відповідь 2</label>
+                <label><input type="checkbox" name="q2" value="3"> Відповідь 3</label>
+                <label><input type="checkbox" name="q2" value="4"> Відповідь 4</label>
+            </div>
+
+
+            <div class="question-group">
+                <h3>Запитання 3: Оберіть правильний варіант (однорядкове текстове поле)</h3>
+                <input type="text" name="q3" placeholder="Ваш варіант відповіді">
+            </div>
+
+
+            <div class="question-group">
+                <h3>Запитання 4: Оберіть правильні варіанти (множинний вибір)</h3>
+                <select name="q4[]" multiple>
+                    <option value="1">Відповідь 1</option>
+                    <option value="2">Відповідь 2</option>
+                    <option value="3">Відповідь 3</option>
+                    <option value="4">Відповідь 4</option>
+                </select>
+            </div>
+
+
+            <div class="question-group">
+                <h3>Запитання 5: Оберіть правильні варіанти (радіокнопки)</h3>
+                <label><input type="radio" name="q5" value="1"> Відповідь 1</label>
+                <label><input type="radio" name="q5" value="2"> Відповідь 2</label>
+                <label><input type="radio" name="q5" value="3"> Відповідь 3</label>
+                <label><input type="radio" name="q5" value="4"> Відповідь 4</label>
+            </div>
+
+
+            <div class="question-group">
+                <h3>Запитання 6: Оберіть правильні варіанти (прапорці)</h3>
+                <label><input type="checkbox" name="q6" value="1"> Відповідь 1</label>
+                <label><input type="checkbox" name="q6" value="2"> Відповідь 2</label>
+                <label><input type="checkbox" name="q6" value="3"> Відповідь 3</label>
+                <label><input type="checkbox" name="q6" value="4"> Відповідь 4</label>
+            </div>
+
+
+            <button type="button" onclick="submitQuiz()">Завершити тестування</button>
+        </form>
+
+
+        <h2>Результати тестування</h2>
+        <table id="resultsTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Запитання</th>
+                    <th>Обрані варіанти</th>
+                    <th>Отриманий бал</th>
+                </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">Загальний бал</td>
+                    <td id="totalScore"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+    <script>
+        function submitQuiz() {
+            const form = document.getElementById('quizForm');
+            const resultsTable = document.getElementById('resultsTable');
+            const resultsBody = document.getElementById('resultsBody');
+            const totalScoreElem = document.getElementById('totalScore');
+
+
+            let totalScore = 0;
+
+
+            // Questions' correct answers
+            const correctAnswers = {
+                q1: 2,
+                q2: [2, 3],
+                q3: 'правильний текст',
+                q4: [1, 3],
+                q5: 4,
+                q6: [2, 4]
+            };
+
+
+            resultsBody.innerHTML = '';
+            let questionIndex = 1;
+
+
+            for (let questionName in correctAnswers) {
+                const userAnswer = form[questionName].value;
+                let score = 0;
+
+
+                if (Array.isArray(correctAnswers[questionName])) {
+                    // For checkbox or multiple select
+                    const correctCount = correctAnswers[questionName].length;
+                    const userAnswerArray = Array.isArray(userAnswer) ? userAnswer : [userAnswer];
+                    const selectedCorrect = userAnswerArray.filter(val => correctAnswers[questionName].includes(parseInt(val)));
+                    const selectedCount = selectedCorrect.length;
+
+
+                    if (selectedCount === correctCount) {
+                        score = 2;
+                    } else if (selectedCount === 1) {
+                        score = 1;
+                    }
+                } else if (userAnswer == correctAnswers[questionName]) {
+                    score = 1;
+                }
+
+
+                totalScore += score;
+
+
+                // Add to results table
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>Запитання ${questionIndex}</td>
+                    <td>${Array.isArray(userAnswer) ? userAnswer.join(', ') : userAnswer}</td>
+                    <td>${score}</td>
+                `;
+                resultsBody.appendChild(tr);
+
+
+                questionIndex++;
+            }
+
+
+            // Show results table and total score
+            resultsTable.style.display = 'block';
+            totalScoreElem.textContent = totalScore;
+        }
+    </script>
+</body>
+</html>
+
+

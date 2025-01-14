@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна 2.1: Годинник та Календар</title>
+    <style>
+        /* Загальні стилі */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #2E3B55, #1B1B2F, #0F3460);
+            color: #EDEDED;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+
+        /* Контейнер для годинника */
+        .clock-container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 50px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+
+        /* Анімація появи */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* Стилі тексту */
+        .clock-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+
+        .clock {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #00D4FF;
+            text-shadow: 0px 0px 10px #00D4FF, 0px 0px 20px #00D4FF;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="clock-title">Поточний час</div>
+        <div class="clock" id="clock"></div>
+    </div>
+
+
+    <script>
+        // Функція для оновлення годинника
+        function updateClock() {
+            const now = new Date();
+
+
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+
+            const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+
+            document.getElementById('clock').textContent = formattedTime;
+        }
+
+
+        // Оновлення кожну секунду
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>

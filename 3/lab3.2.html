@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Екранна клавіатура</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+
+        .keyboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        .keyboard-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+
+        .keyboard-btn {
+            padding: 10px;
+            margin: 2px;
+            font-size: 18px;
+            cursor: pointer;
+            border: 1px solid #00796b;
+            background-color: #80deea;
+            color: #00796b;
+            border-radius: 5px;
+        }
+
+
+        .text-input {
+            width: 300px;
+            height: 100px;
+            font-size: 16px;
+            padding: 10px;
+            border: 2px solid #00796b;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+
+        .clear-btn {
+            background-color: #ff7043;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="keyboard">
+        <textarea class="text-input" id="text-input" placeholder="Набирайте текст тут..."></textarea>
+
+
+        <div class="keyboard-row">
+            <button class="keyboard-btn">1</button>
+            <button class="keyboard-btn">2</button>
+            <button class="keyboard-btn">3</button>
+            <button class="keyboard-btn">4</button>
+            <button class="keyboard-btn">5</button>
+            <button class="keyboard-btn">6</button>
+            <button class="keyboard-btn">7</button>
+            <button class="keyboard-btn">8</button>
+            <button class="keyboard-btn">9</button>
+            <button class="keyboard-btn">0</button>
+        </div>
+
+
+        <div class="keyboard-row">
+            <button class="keyboard-btn">а</button>
+            <button class="keyboard-btn">б</button>
+            <button class="keyboard-btn">в</button>
+            <button class="keyboard-btn">г</button>
+            <button class="keyboard-btn">д</button>
+            <button class="keyboard-btn">е</button>
+            <button class="keyboard-btn">є</button>
+        </div>
+
+
+        <div class="keyboard-row">
+            <button class="keyboard-btn">и</button>
+            <button class="keyboard-btn">і</button>
+            <button class="keyboard-btn">ї</button>
+            <button class="keyboard-btn">ж</button>
+            <button class="keyboard-btn">з</button>
+            <button class="keyboard-btn">и</button>
+            <button class="keyboard-btn">й</button>
+            <button class="keyboard-btn">л</button>
+            <button class="keyboard-btn">м</button>
+            <button class="keyboard-btn">н</button>
+        </div>
+
+
+        <div class="keyboard-row">
+            <button class="keyboard-btn">о</button>
+            <button class="keyboard-btn">п</button>
+            <button class="keyboard-btn">р</button>
+            <button class="keyboard-btn">с</button>
+            <button class="keyboard-btn">т</button>
+            <button class="keyboard-btn">у</button>
+            <button class="keyboard-btn">ф</button>
+            <button class="keyboard-btn">х</button>
+            <button class="keyboard-btn">ц</button>
+            <button class="keyboard-btn">ч</button>
+        </div>
+
+
+        <button class="keyboard-btn clear-btn" onclick="clearText()">Очистити поле</button>
+    </div>
+
+
+    <script>
+        const textInput = document.getElementById('text-input');
+
+
+        document.querySelectorAll('.keyboard-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                textInput.value += button.innerText;
+            });
+        });
+
+
+        function clearText() {
+            textInput.value = '';
+        }
+    </script>
+</body>
+</html>

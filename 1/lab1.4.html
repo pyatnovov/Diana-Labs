@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 4: Розгалужений обчислювальний процес</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            padding: 8px;
+            width: calc(100% - 16px);
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 15px;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Завдання 4: Обчислення F</h1>
+
+
+    <!-- Поля вводу для змінних x та y -->
+    <div class="form-group">
+        <label for="xValue">Введіть значення x:</label>
+        <input type="number" id="xValue" placeholder="Введіть x">
+    </div>
+    <div class="form-group">
+        <label for="yValue">Введіть значення y:</label>
+        <input type="number" id="yValue" placeholder="Введіть y">
+    </div>
+
+
+    <!-- Поле для результату -->
+    <div class="form-group">
+        <label for="result">Результат F:</label>
+        <input type="text" id="result" readonly>
+    </div>
+
+
+    <!-- Кнопка для обчислення -->
+    <button onclick="calculateF()">Обчислити F</button>
+
+
+    <div class="result" id="errorMessage"></div>
+
+
+    <script>
+        function calculateF() {
+            // Зчитуємо значення x та y
+            const x = parseFloat(document.getElementById("xValue").value);
+            const y = parseFloat(document.getElementById("yValue").value);
+            const resultField = document.getElementById("result");
+            const errorMessage = document.getElementById("errorMessage");
+
+
+            // Перевірка на коректність введення
+            if (isNaN(x) || isNaN(y)) {
+                errorMessage.textContent = "Будь ласка, введіть коректні числові значення для x та y!";
+                resultField.value = "";
+                return;
+            }
+
+
+            // Очистка повідомлення про помилку
+            errorMessage.textContent = "";
+
+
+            let F; // Змінна для результату
+
+
+            // Реалізація розгалужень згідно умови завдання
+            if (x > 0 && y < 0) {
+                F = -3 * x + Math.pow(y, 3);
+            } else if (x * y - x < 3) {
+                F = x + y - Math.pow(x, 2) * y;
+            } else {
+                F = Math.pow(x, 2) + Math.pow(y, 2);
+            }
+
+
+            // Вивід результату
+            resultField.value = F.toFixed(2); // Форматуємо до 2 знаків після коми
+        }
+    </script>
+</body>
+</html>

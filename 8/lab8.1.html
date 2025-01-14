@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Time Manipulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+
+        #timeDisplay {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+
+        input {
+            font-size: 1em;
+            padding: 5px;
+            margin: 5px;
+        }
+
+
+        button {
+            font-size: 1em;
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="timeDisplay"></div>
+
+
+    <h3>Change Time:</h3>
+    <input type="number" id="secondsInput" placeholder="Add seconds" />
+    <button onclick="timeObject.addSeconds(parseInt(document.getElementById('secondsInput').value))">Add Seconds</button>
+
+
+    <input type="number" id="minutesInput" placeholder="Add minutes" />
+    <button onclick="timeObject.addMinutes(parseInt(document.getElementById('minutesInput').value))">Add Minutes</button>
+
+
+    <input type="number" id="hoursInput" placeholder="Add hours" />
+    <button onclick="timeObject.addHours(parseInt(document.getElementById('hoursInput').value))">Add Hours</button>
+
+
+    <script>
+        const timeObject = {
+            hours: 20,
+            minutes: 30,
+            seconds: 45,
+
+
+            displayCurrentTime() {
+                document.getElementById('timeDisplay').innerText = `${this.hours}:${this.minutes}:${this.seconds}`;
+            },
+
+
+            addSeconds(sec) {
+                this.seconds += sec;
+
+
+                // Обробка можливих "перекриттів" хвилин
+                while (this.seconds >= 60) {
+                    this.seconds -= 60;
+                    this.minutes++;
+                }
+
+
+                // Обробка можливих "перекриттів" годин
+                while (this.minutes >= 60) {
+                    this.minutes -= 60;
+                    this.hours++;
+                }
+
+
+                this.displayCurrentTime();
+            },
+
+
+            addMinutes(min) {
+                this.minutes += min;
+
+
+                // Обробка можливих "перекриттів" годин
+                while (this.minutes >= 60) {
+                    this.minutes -= 60;
+                    this.hours++;
+                }
+
+
+                this.displayCurrentTime();
+            },
+
+
+            addHours(hour) {
+                this.hours += hour;
+
+
+                // Обробка можливих "перекриттів" годин
+                while (this.hours >= 24) {
+                    this.hours -= 24;
+                }
+
+
+                this.displayCurrentTime();
+            }
+        };
+
+
+        // Виводимо поточний час при завантаженні
+        timeObject.displayCurrentTime();
+    </script>
+</body>
+</html>

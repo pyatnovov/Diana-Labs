@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма реєстрації</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #e6e383;
+            border-radius: 5px;
+            background-color: #f8f07d;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .form-group input[type="password"] {
+            font-family: monospace;
+        }
+        .form-group input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffd902;
+            border: none;
+            color: rgb(255, 255, 171);
+            cursor: pointer;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #ffd902;
+        }
+        .form-group .validation-message {
+            color: red;
+            display: none;
+        }
+        .form-group.valid input {
+            border-color: rgb(255, 240, 140);
+        }
+        .form-group.valid .validation-message {
+            display: none;
+        }
+        .form-group.invalid input {
+            border-color: red;
+        }
+        .form-group.invalid .validation-message {
+            display: block;
+        }
+        .form-group .validation-icon {
+            display: none;
+            margin-left: 10px;
+        }
+        .form-group.valid .validation-icon.valid {
+            display: inline-block;
+            content: url('check-icon.png'); /* Зображення галочки */
+        }
+        .form-group.invalid .validation-icon.invalid {
+            display: inline-block;
+            content: url('error-icon.png'); /* Зображення помилки */
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="form-container">
+    <h2>Реєстрація</h2>
+    <form id="registrationForm">
+        <div class="form-group" id="emailGroup">
+            <label for="email">Адреса електронної пошти (e-mail):</label>
+            <input type="email" id="email" name="email" required>
+            <span class="validation-message">E-mail має містити символ @ та закінчуватися на pnu.edu.ua</span>
+            <span class="validation-icon invalid"></span>
+        </div>
+
+
+        <div class="form-group" id="firstNameGroup">
+            <label for="first-name">Ім’я:</label>
+            <input type="text" id="first-name" name="first_name" required>
+            <span class="validation-message">Ім’я має містити лише літери, перша літера велика, наступні маленькі.</span>
+            <span class="validation-icon invalid"></span>
+        </div>
+
+
+        <div class="form-group" id="lastNameGroup">
+            <label for="last-name">Прізвище:</label>
+            <input type="text" id="last-name" name="last_name" required>
+            <span class="validation-message">Прізвище має містити лише літери, усі великі.</span>
+            <span class="validation-icon invalid"></span>
+        </div>
+
+
+        <div class="form-group" id="loginGroup">
+            <label for="login">Логін:</label>
+            <input type="text" id="login" name="login" required>
+            <span class="validation-message">Логін має містити лише латинські літери.</span>
+            <span class="validation-icon invalid"></span>
+        </div>
+
+
+        <div class="form-group" id="passwordGroup">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+            <span class="validation-message">Пароль повинен містити мінімум 8 символів, мінімум одну букву, цифру та спецсимвол (_-!@#$%^&*).</span>
+            <span class="validation-icon invalid"></span>
+        </div>
+
+
+        <div class="form-group" id="postalCodeGroup">
+            <label for="postal-code">Поштовий індекс:</label>
+            <input type="text" id="postal-code" name="postal_code" required>
+            <span class="validation-message">Поштовий індекс має містити лише 5 цифр.</span>
+            <span class="validation-icon invalid"></span>
+        </div>
+
+
+        <div class="form-group">
+            <input type="submit" value="Реєстрація" onclick="validateForm(event)">
+        </div>
+    </form>
+</div>
+
+
+<script>
+    function validateForm(event) {
+        event.preventDefault(); // Зупиняємо відправку форми
+
+
+        let form = document.getElementById('registrationForm');
+        let email = form.email.value;
+        let firstName = form['first_name'].value;
+        let lastName = form['last_name'].value;
+        let login = form.login.value;
+        let password = form.password.value;
+        let postalCode = form['postal_code'].value;
+
+
+        // Експресії для регулярних виразів
+        let emailRegex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,6}$/i;
+        let nameRegex = /^[A-Z][a-z]+$/; // Ім’я має починатися з великої букви і містити лише літери
+        let loginRegex = /^[a-z]+$/i; // Логін повинен містити лише латинські літери
+        let passwordRegex = /^(?=.*[a-z])(?=.*\d)(?=.*[_-!@#$%^&*])[a-z\d_-!@#$%^&*]{8,}$/i; // Пароль з мінімум 8 символів, 1 буква, 1 цифра, 1 спецсимвол
+        let postalCodeRegex = /^\d{5}$/; // Поштовий індекс має бути 5 цифр
+
+
+        // Перевірка кожного поля
+        validateField('email', emailRegex);
+        validateField('first-name', nameRegex);
+        validateField('last-name', nameRegex);
+        validateField('login', loginRegex);
+        validateField('password', passwordRegex);
+        validateField('postal-code', postalCodeRegex);
+    }
+
+
+    function validateField(fieldId, regex) {
+        let field = document.getElementById(fieldId);
+        let group = field.parentElement; // Батьківська група поля
+        let validationIcon = group.querySelector('.validation-icon');
+        let validationMessage = group.querySelector('.validation-message');
+
+
+        if (regex.test(field.value)) {
+            group.classList.remove('invalid');
+            group.classList.add('valid');
+            validationIcon.classList.remove('invalid');
+            validationIcon.classList.add('valid');
+        } else {
+            group.classList.remove('valid');
+            group.classList.add('invalid');
+            validationIcon.classList.remove('valid');
+            validationIcon.classList.add('invalid');
+        }
+    }
+</script>
+
+
+</body>
+</html>
+
+

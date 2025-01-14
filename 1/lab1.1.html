@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інформація про студента</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .info {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Інформація про студента</h1>
+    <div class="info">
+        <p>Прізвище, ім'я та по батькові студента:</p>
+        <p id="fullName"></p>
+    </div>
+    <button onclick="showBirthInfo()">Показати інформацію про народження</button>
+
+
+    <script>
+        // Відображення ПІБ засобами JavaScript
+        const surname = "Гасюк";
+        const firstName = "Діана";
+        const middleName = "Сергіївна";
+        document.getElementById("fullName").textContent = `${surname} ${firstName} ${middleName}`;
+
+
+        // Функція для відображення повідомлення
+        function showBirthInfo() {
+            const birthDate = "30.10.2005";
+            const birthPlace = "м. Івано-Франківськ";
+            alert(`Дата народження: ${birthDate}\nМісце народження: ${birthPlace}`);
+        }
+    </script>
+</body>
+</html>

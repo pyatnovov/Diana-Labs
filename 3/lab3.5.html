@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перевірка знань арифметики</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e3f2fd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+
+        .quiz-container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #2196f3;
+        }
+
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #64b5f6;
+            color: white;
+        }
+
+
+        .btn:hover {
+            background-color: #42a5f5;
+        }
+
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="question" id="question"></div>
+        <input type="number" class="answer-input" id="answer" placeholder="Введіть відповідь...">
+        <div class="buttons">
+            <button class="btn" onclick="checkAnswer()">Перевірити</button>
+            <button class="btn" onclick="nextQuestion()">Наступне завдання</button>
+        </div>
+        <div class="result" id="result"></div>
+        <div class="result" id="score">Загальний рахунок: 0/5</div>
+    </div>
+
+
+    <script>
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+        const operations = ['+', '-', '*', '/'];
+        const questions = [];
+        let correctAnswer;
+
+
+        // Function to generate a random number in a given range
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+
+        // Function to generate a question
+        function generateQuestion() {
+            const num1 = getRandomInt(0, 9);
+            const num2 = getRandomInt(0, 9);
+            const operation = operations[getRandomInt(0, operations.length - 1)];
+            let question;
+
+
+            switch (operation) {
+                case '+':
+                    correctAnswer = num1 + num2;
+                    question = `${num1} + ${num2}`;
+                    break;
+                case '-':
+                    correctAnswer = num1 - num2;
+                    question = `${num1} - ${num2}`;
+                    break;
+                case '*':
+                    correctAnswer = num1 * num2;
+                    question = `${num1} * ${num2}`;
+                    break;
+                case '/':
+                    correctAnswer = num1 * num2; // multiplication for exact answer
+                    question = `${correctAnswer} / ${num2}`;
+                    correctAnswer /= num2;
+                    break;
+            }
+
+
+            questions.push({ question, correctAnswer });
+        }
+
+
+        // Function to load the next question
+        function nextQuestion() {
+            if (currentQuestion < 4) {
+                currentQuestion++;
+                document.getElementById('result').innerText = '';
+                document.getElementById('answer').value = '';
+                loadQuestion();
+            } else {
+                document.getElementById('result').innerText = `Завершено! Ви відповіли на ${correctAnswers}/5 питань правильно.`;
+                document.getElementById('question').innerText = '';
+                document.getElementById('answer').style.display = 'none';
+                document.getElementById('score').style.display = 'none';
+            }
+        }
+
+
+        // Function to load the current question
+        function loadQuestion() {
+            const questionData = questions[currentQuestion];
+            document.getElementById('question').innerText = questionData.question;
+        }
+
+
+        // Function to check the answer
+        function checkAnswer() {
+            const userAnswer = parseFloat(document.getElementById('answer').value);
+            const correctAnswer = questions[currentQuestion].correctAnswer;
+
+
+            if (userAnswer === correctAnswer) {
+                document.getElementById('result').innerText = 'Правильно!';
+                correctAnswers++;
+            } else {
+                document.getElementById('result').innerText = `Помилка, правильна відповідь «${correctAnswer}»`;
+            }
+
+
+            document.getElementById('score').innerText = `Загальний рахунок: ${correctAnswers}/5`;
+        }
+
+
+        // Generate the questions initially
+        for (let i = 0; i < 5; i++) {
+            generateQuestion();
+        }
+
+
+        // Load the first question
+        loadQuestion();
+    </script>
+</body>
+</html>

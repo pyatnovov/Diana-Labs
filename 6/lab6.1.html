@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Parser</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Email Parser</h1>
+    <p>Даний приклад розбиває e-mail на складові частини:</p>
+
+
+    <script>
+        // Email для аналізу
+        let email = "dwbyu@mail.ua";
+
+
+        // Регулярний вираз для перевірки та розбиття
+        let regex = /^([a-z0-9]+)(\.[a-z0-9]+)*@([a-z0-9]+)(\.[a-z0-9]+)*$/i;
+
+
+        // Перевіряємо відповідність
+        let match = email.match(regex);
+
+
+        // Функція для виведення результатів
+        function displayResult(content, isError = false) {
+            let resultDiv = document.createElement('div');
+            resultDiv.className = isError ? 'result error' : 'result';
+            resultDiv.innerHTML = content;
+            document.body.appendChild(resultDiv);
+        }
+
+
+        // Якщо збіг є
+        if (match) {
+            displayResult(`<strong>Оригінальний e-mail:</strong> ${email}`);
+
+
+            displayResult(`<strong>Розбиті частини:</strong>`);
+            match.forEach((part, index) => {
+                displayResult(`a[${index}] = ${part !== undefined ? part : "<i>undefined</i>"}`);
+            });
+        } else {
+            // Якщо e-mail не відповідає шаблону
+            displayResult(`E-mail "${email}" не відповідає формату.`, true);
+        }
+    </script>
+</body>
+</html>
